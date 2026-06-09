@@ -3,51 +3,51 @@ const prompts = {
     queens: [
         {
             question: "Describe a moment when you had to make a difficult decision under uncertainty. How did you approach it, and what would you do differently knowing what you know now?",
-            timeLimit: 45,
+            timeLimit: 10,
             wordLimit: 650
         },
         {
             question: "Tell us about a time when your initial perspective on a problem was challenged by someone else. How did that experience shape your thinking?",
-            timeLimit: 45,
+            timeLimit: 10,
             wordLimit: 650
         },
         {
             question: "Reflect on a failure or setback. What did it reveal about your character, and how has it influenced your approach to future challenges?",
-            timeLimit: 45,
+            timeLimit: 10,
             wordLimit: 650
         }
     ],
     ivey: [
         {
             question: "Describe a situation where you identified a problem in your school or community and took concrete action to address it. What was the measurable impact of your initiative, and what challenges did you overcome as the project owner?",
-            timeLimit: 45,
+            timeLimit: 10,
             wordLimit: 650
         },
         {
             question: "Tell us about a time you led a team or group through a complex challenge. How did you mobilize others, and what specific outcomes did your leadership produce?",
-            timeLimit: 45,
+            timeLimit: 10,
             wordLimit: 650
         },
         {
             question: "Describe an initiative you spearheaded where you had to balance competing priorities or interests. What trade-offs did you make, and why did you make them?",
-            timeLimit: 45,
+            timeLimit: 10,
             wordLimit: 650
         }
     ],
     rotman: [
         {
             question: "Walk us through your analysis of a complex business problem you've encountered (real or hypothetical). What frameworks did you use to break it down, and what conclusion did you reach?",
-            timeLimit: 45,
+            timeLimit: 10,
             wordLimit: 650
         },
         {
             question: "Describe a time when you had to learn something entirely new within a tight timeframe. How did you structure your learning, and what analytical approach helped you master it?",
-            timeLimit: 45,
+            timeLimit: 10,
             wordLimit: 650
         },
         {
             question: "Tell us about a decision where quantitative data pointed in one direction but your intuition pointed in another. How did you reconcile the two, and what was the outcome?",
-            timeLimit: 45,
+            timeLimit: 10,
             wordLimit: 650
         }
     ]
@@ -57,6 +57,13 @@ const prompts = {
 function generatePrompt(school, format) {
     const schoolPrompts = prompts[school];
     const randomPrompt = schoolPrompts[Math.floor(Math.random() * schoolPrompts.length)];
+    
+    // Adjust time limit based on format
+    if (format === 'video') {
+        // Video: 2 min think + 2 min talk = 4 min total
+        randomPrompt.timeLimit = 4;
+    }
+    
     return randomPrompt;
 }
 
@@ -454,7 +461,7 @@ function getTierComparison(scores, school) {
 
     const tier = scores.total >= 85 ? 'exceptional' : scores.total >= 75 ? 'admitted' : scores.total >= 65 ? 'admitted' : 'rejected';
     const tierLabel = tier === 'exceptional' ? '🌟 Your Response Most Resembles: EXCEPTIONAL' : tier === 'admitted' ? '✅ Your Response Most Resembles: ADMITTED' : '🚫 Your Response Most Resembles: REJECTED';
-    const tierExplanation = tier === 'exceptional' ? 'You demonstrated exceptional judgment, specificity, and self-awareness.' : tier === 'admitted' ? 'You're in the admitted range but need polish and stronger metrics.' : 'Significant gaps in authenticity, impact, or reflection need addressing.';
+    const tierExplanation = tier === 'exceptional' ? 'You demonstrated exceptional judgment, specificity, and self-awareness.' : tier === 'admitted' ? 'You\'re in the admitted range but need polish and stronger metrics.' : 'Significant gaps in authenticity, impact, or reflection need addressing.';
 
     html += `<div class="tier-box ${tier}"><strong>${tierLabel}</strong><br/>${tierExplanation}</div>`;
 
