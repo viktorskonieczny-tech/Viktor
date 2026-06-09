@@ -56,15 +56,16 @@ const prompts = {
 // Generate Prompt
 function generatePrompt(school, format) {
     const schoolPrompts = prompts[school];
-    const randomPrompt = schoolPrompts[Math.floor(Math.random() * schoolPrompts.length)];
+    const selectedPrompt = schoolPrompts[Math.floor(Math.random() * schoolPrompts.length)];
     
-    // Adjust time limit based on format
-    if (format === 'video') {
-        // Video: 2 min think + 2 min talk = 4 min total
-        randomPrompt.timeLimit = 4;
-    }
+    // Create a copy so we don't modify the original
+    const promptCopy = {
+        question: selectedPrompt.question,
+        wordLimit: selectedPrompt.wordLimit,
+        timeLimit: format === 'video' ? 4 : 10  // 4 min for video (2 think + 2 talk), 10 min for written
+    };
     
-    return randomPrompt;
+    return promptCopy;
 }
 
 // Grading Engine
