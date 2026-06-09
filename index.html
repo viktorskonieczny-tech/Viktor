@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admissions Application Grader | Viktor</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>🎓 Admissions Application Grader</h1>
+            <p class="subtitle">Elite Review Committee Simulation for Canadian Commerce Programs</p>
+        </header>
+
+        <!-- Stage 1: School Selection -->
+        <section id="stage-school" class="stage active">
+            <h2>Step 1: Select Your Program</h2>
+            <div class="button-group">
+                <button class="school-btn" data-school="queens">
+                    <strong>Queen's Smith Commerce</strong>
+                    <span>Reflection • Judgment • Self-Awareness</span>
+                </button>
+                <button class="school-btn" data-school="ivey">
+                    <strong>Western Ivey AEO</strong>
+                    <span>Initiative • Leadership • Measurable Impact</span>
+                </button>
+                <button class="school-btn" data-school="rotman">
+                    <strong>U of T Rotman Commerce</strong>
+                    <span>Analytical Thinking • Curiosity • Structured Logic</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Stage 2: Format Selection -->
+        <section id="stage-format" class="stage">
+            <h2>Step 2: Choose Response Format</h2>
+            <div class="button-group">
+                <button class="format-btn" data-format="essay">
+                    <strong>📝 Timed Essay</strong>
+                    <span>Written response (650 words, 45 min)</span>
+                </button>
+                <button class="format-btn" data-format="video">
+                    <strong>🎥 Video Transcription</strong>
+                    <span>Paste transcribed video response (450 words, 3 min)</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Stage 3: Question & Response -->
+        <section id="stage-prompt" class="stage">
+            <div class="prompt-container">
+                <div class="prompt-header">
+                    <span class="prompt-school" id="prompt-school"></span>
+                    <span class="prompt-format" id="prompt-format"></span>
+                </div>
+                <div class="prompt-text">
+                    <h3>Your Question:</h3>
+                    <p id="prompt-content"></p>
+                </div>
+                <div class="constraints">
+                    <p><strong>⏱️ Time Limit:</strong> <span id="time-limit"></span></p>
+                    <p><strong>📄 Word Limit:</strong> <span id="word-limit"></span></p>
+                </div>
+            </div>
+
+            <div class="timer-section">
+                <div class="timer" id="timer">00:00</div>
+                <div class="timer-controls">
+                    <button id="btn-start-timer" class="btn btn-primary">▶️ Start Timer</button>
+                    <button id="btn-pause-timer" class="btn btn-secondary" style="display:none;">⏸ Pause</button>
+                    <button id="btn-reset-timer" class="btn btn-secondary">🔄 Reset</button>
+                </div>
+            </div>
+
+            <div class="response-section">
+                <label for="response-text"><strong>Your Response:</strong></label>
+                <textarea id="response-text" placeholder="Paste or type your response here..." rows="12"></textarea>
+                <div class="word-count">
+                    <span id="current-word-count">0</span> / <span id="max-word-count"></span> words
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button id="btn-submit" class="btn btn-success">📊 Submit for Evaluation</button>
+                <button id="btn-back" class="btn btn-secondary">← Back</button>
+            </div>
+        </section>
+
+        <!-- Stage 4: Evaluation Report -->
+        <section id="stage-report" class="stage">
+            <div class="report-container">
+                <h2>🛑 ADMISSIONS PANEL EVALUATION REPORT</h2>
+                
+                <!-- Score Section -->
+                <div class="score-section">
+                    <h3>📊 SCORE: <span id="final-score">0</span> / 100</h3>
+                    <div class="rubric-scores">
+                        <div class="rubric-item">
+                            <span>Structure & Constraints:</span>
+                            <strong id="score-structure">0</strong>/25
+                        </div>
+                        <div class="rubric-item">
+                            <span>Character & Maturity:</span>
+                            <strong id="score-character">0</strong>/25
+                        </div>
+                        <div class="rubric-item">
+                            <span>Leadership & Ownership:</span>
+                            <strong id="score-leadership">0</strong>/15
+                        </div>
+                        <div class="rubric-item">
+                            <span>Impact & Results:</span>
+                            <strong id="score-impact">0</strong>/15
+                        </div>
+                        <div class="rubric-item">
+                            <span>Reflection & Authenticity:</span>
+                            <strong id="score-reflection">0</strong>/20
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Rejection Threshold Test -->
+                <div class="feedback-section">
+                    <h4>📉 REJECTION THRESHOLD TEST</h4>
+                    <div class="threshold-result" id="threshold-result"></div>
+                    <div class="threshold-reason" id="threshold-reason"></div>
+                </div>
+
+                <!-- Memorability Test -->
+                <div class="feedback-section">
+                    <h4>🧠 THE GRANULAR MEMORABILITY TEST</h4>
+                    <div id="memorability-test"></div>
+                </div>
+
+                <!-- Credibility Audit -->
+                <div class="feedback-section">
+                    <h4>🔍 CREDIBILITY AUDIT</h4>
+                    <div id="credibility-audit"></div>
+                </div>
+
+                <!-- Cliché Detector -->
+                <div class="feedback-section">
+                    <h4>🚨 CLICHÉ DETECTOR & CRITICAL WEAKNESSES</h4>
+                    <div id="cliche-detector"></div>
+                </div>
+
+                <!-- Strategic Deconstruction -->
+                <div class="feedback-section">
+                    <h4>🛠️ STRATEGIC DECONSTRUCTION</h4>
+                    <div id="strategic-deconstruction"></div>
+                </div>
+
+                <!-- Applicant Tier Comparison -->
+                <div class="feedback-section">
+                    <h4>👥 APPLICANT TIER COMPARISON</h4>
+                    <div id="tier-comparison"></div>
+                </div>
+
+                <!-- Panel Follow-up Questions -->
+                <div class="feedback-section">
+                    <h4>🎙️ PANEL FOLLOW-UP QUESTIONS</h4>
+                    <p class="followup-intro">To simulate a real admissions panel digging deeper into your file, answer these follow-up questions:</p>
+                    <div id="followup-questions"></div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button id="btn-new-attempt" class="btn btn-primary">🔄 Try Another Prompt</button>
+                <button id="btn-home" class="btn btn-secondary">🏠 Start Over</button>
+            </div>
+        </section>
+    </div>
+
+    <script src="grading-engine.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
